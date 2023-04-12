@@ -8,16 +8,26 @@
 #include <sstream> 
 
 using namespace std;
-void main()
+bool main(int argc, char* argv[])
 {
-	//example
-	FSMTimeout TFSM;
-	FSM Abstraction;
-	ifstream in("0.fsm");
-	TFSM.In(in);
-	in.close();
-	Abstraction = TFSM.FSMTimeoutToFSM();
-	ofstream out("1.fsm");
-	Abstraction.Out(out);
-	out.close();
+	if (argc != 2)
+	{
+		return 0;
+	}
+	else
+	{
+		FSMTimeout TFSM;
+		FSM Abstraction;
+		ifstream in(argv[1]);
+		TFSM.In(in);
+		in.close();
+		Abstraction = TFSM.FSMTimeoutToFSM();
+		string str = argv[1];
+		str.erase(str.size()-4, str.size());
+		str.append("Abs.fsm");
+		ofstream out(str);
+		Abstraction.Out(out);
+		out.close();
+		return 1;
+	}
 }
